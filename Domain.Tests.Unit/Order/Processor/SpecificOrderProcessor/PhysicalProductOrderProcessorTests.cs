@@ -63,7 +63,8 @@ public class PhysicalProductOrderProcessorTests
         
         // Assert
         PackingSlip.PackingSlip packingSlip = physicalProductOrderData.GetPackingSlip(order);
-        var generatePackingSlipCommand = new GeneratePackingSlipCommand(packingSlip, new PackingSlipRecipient("WAREHOUSE", "Warehouse somewhere"));
+        var packingSlipRecipient = new PackingSlipRecipient(PhysicalProductOrderProcessor.WarehouseName, PhysicalProductOrderProcessor.WarehouseAddress);
+        var generatePackingSlipCommand = new GeneratePackingSlipCommand(packingSlip, packingSlipRecipient);
         _mediatorMock.Verify(x => x.Send(generatePackingSlipCommand, It.IsAny<CancellationToken>()), Times.Once);
     }
 }
