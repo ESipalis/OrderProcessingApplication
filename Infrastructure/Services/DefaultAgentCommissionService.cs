@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Services;
 
-public class DefaultAgentCommissionService : IAgentCommissionService
+internal class DefaultAgentCommissionService : IAgentCommissionService
 {
     private readonly ILogger<DefaultAgentCommissionService> _logger;
 

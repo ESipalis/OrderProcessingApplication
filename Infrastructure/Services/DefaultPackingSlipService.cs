@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Services;
 
-public class DefaultPackingSlipService : IPackingSlipService
+internal class DefaultPackingSlipService : IPackingSlipService
 {
     private readonly ILogger<DefaultPackingSlipService> _logger;
 
