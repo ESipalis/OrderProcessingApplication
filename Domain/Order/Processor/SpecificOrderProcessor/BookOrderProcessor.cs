@@ -14,18 +14,25 @@ public class BookOrderProcessor : ISpecificOrderProcessor
     internal const string RoyaltyName = "ROYALTY";
     internal const string RoyaltyAddress = "Royalty somewhere";
     
+    private IMediator _mediator;
+
     public BookOrderProcessor(IMediator mediator)
     {
-        throw new InvalidOperationException();
+        _mediator = mediator;
     }
 
     public bool CheckOrderSuitabilityForProcessing(Order order)
     {
-        throw new InvalidOperationException();
+        return order.Data.TryPickT1(out BookOrderData _, out _);
     }
 
     public async Task ProcessOrder(Order order)
     {
-        throw new InvalidOperationException();
+        PhysicalProductOrderData physicalProductOrderData = order.Data.AsT0;
+        PackingSlip.PackingSlip packingSlip = physicalProductOrderData.GetPackingSlip(order);
+        var warehousePackingSlipCommand = new GeneratePackingSlipCommand(packingSlip, new PackingSlipRecipient(WarehouseName, WarehouseAddress));
+        await _mediator.Send(warehousePackingSlipCommand);
+        var royaltyPackingSlipCommand = new GeneratePackingSlipCommand(packingSlip, new PackingSlipRecipient(RoyaltyName, RoyaltyAddress));
+        await _mediator.Send(royaltyPackingSlipCommand);
     }
 }
