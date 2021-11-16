@@ -11,12 +11,12 @@ public class OrderProcessor
         _specificOrderProcessors = specificOrderProcessors.ToList();
     }
 
-    public void ProcessOrder(Order order)
+    public async Task ProcessOrder(Order order)
     {
         IEnumerable<ISpecificOrderProcessor> processorsToRun = _specificOrderProcessors.Where(specificOrderProcessor => specificOrderProcessor.CheckOrderSuitabilityForProcessing(order));
         foreach (ISpecificOrderProcessor specificOrderProcessor in processorsToRun)
         {
-            specificOrderProcessor.ProcessOrder(order);
+            await specificOrderProcessor.ProcessOrder(order);
         }
     }
 }

@@ -3,5 +3,5 @@
 public interface ISpecificOrderProcessor
 {
     bool CheckOrderSuitabilityForProcessing(Order order);
-    void ProcessOrder(Order order);
+    Task ProcessOrder(Order order);
 }

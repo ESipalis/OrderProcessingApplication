@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Order.Processor;
 using Domain.Order.Processor.SpecificOrderProcessor;
 using Domain.Order.SpecificOrderData;
@@ -27,14 +28,14 @@ public class OrderProcessorTests
     [InlineData(true, false, false)]
     [InlineData(false, true, false)]
     [InlineData(false, false, true)]
-    public void ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesOnlyOneProcessor(params bool[] orderSuitabilityResults)
+    public async Task ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesOnlyOneProcessor(params bool[] orderSuitabilityResults)
     {
         // Arrange
         var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, orderSuitabilityResults);
 
         // Act
-        _sut.ProcessOrder(order);
+        await _sut.ProcessOrder(order);
 
         // Assert
         for (var index = 0; index < orderSuitabilityResults.Length; index++)
@@ -49,14 +50,14 @@ public class OrderProcessorTests
     [InlineData(true, true, false)]
     [InlineData(false, true, true)]
     [InlineData(true, false, true)]
-    public void ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesMoreThanOneProcessor(params bool[] orderSuitabilityResults)
+    public async Task ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesMoreThanOneProcessor(params bool[] orderSuitabilityResults)
     {
         // Arrange
         var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, orderSuitabilityResults);
 
         // Act
-        _sut.ProcessOrder(order);
+        await _sut.ProcessOrder(order);
 
         // Assert
         for (var index = 0; index < orderSuitabilityResults.Length; index++)
@@ -68,14 +69,14 @@ public class OrderProcessorTests
     }
 
     [Fact]
-    public void ProcessOrder_ShouldNOTExecuteAnyProcessors_WhenOrderDoesNotMatchAnyProcessors()
+    public async Task ProcessOrder_ShouldNOTExecuteAnyProcessors_WhenOrderDoesNotMatchAnyProcessors()
     {
         // Arrange
         var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, new []{false, false, false});
 
         // Act
-        _sut.ProcessOrder(order);
+        await _sut.ProcessOrder(order);
 
         // Assert
         foreach (Mock<ISpecificOrderProcessor> mock in _specificOrderProcessorMocks)
@@ -93,15 +94,15 @@ public class OrderProcessorTests
     [InlineData(false, true, true)]
     [InlineData(true, false, true)]
     [InlineData(false, false, false)]
-    public void ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesProcessor_MultipleIterations(params bool[] orderSuitabilityResults)
+    public async Task ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesProcessor_MultipleIterations(params bool[] orderSuitabilityResults)
     {
         // Arrange
         var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, orderSuitabilityResults);
 
         // Act
-        _sut.ProcessOrder(order);
-        _sut.ProcessOrder(order); // Executed the 2nd time on purpose.
+        await _sut.ProcessOrder(order);
+        await _sut.ProcessOrder(order); // Executed the 2nd time on purpose.
 
         // Assert
         for (var index = 0; index < orderSuitabilityResults.Length; index++)
