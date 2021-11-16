@@ -3,4 +3,4 @@ using OneOf;
 
 namespace Domain.Order;
 
-public record Order(long Id, DateTimeOffset ConfirmationDate, OneOf<PhysicalProductOrderData, BookOrderData, MembershipActivationOrderData, MembershipUpgradeOrderData> Data);
+public record Order(long Id, DateTimeOffset ConfirmationDate, string AgentName, OneOf<PhysicalProductOrderData, BookOrderData, MembershipActivationOrderData, MembershipUpgradeOrderData> Data);

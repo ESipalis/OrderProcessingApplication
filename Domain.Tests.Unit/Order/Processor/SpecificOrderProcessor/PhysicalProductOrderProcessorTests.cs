@@ -29,7 +29,7 @@ public class PhysicalProductOrderProcessorTests
     public void CheckOrderSuitabilityForProcessing_ShouldReturnTrue_WhenItIsPhysicalProductOrder()
     {
         // Arrange
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", new PhysicalProductOrderData("123", 1));
 
         // Act
         bool result = _sut.CheckOrderSuitabilityForProcessing(order);
@@ -42,7 +42,7 @@ public class PhysicalProductOrderProcessorTests
     public void CheckOrderSuitabilityForProcessing_ShouldReturnFalse_WhenItIsNOTPhysicalProductOrder()
     {
         // Arrange
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, new BookOrderData("bookName", "authorName", 1234));
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", new BookOrderData("bookName", "authorName", 1234));
 
         // Act
         bool result = _sut.CheckOrderSuitabilityForProcessing(order);
@@ -56,7 +56,7 @@ public class PhysicalProductOrderProcessorTests
     {
         // Arrange
         var physicalProductOrderData = new PhysicalProductOrderData("123", 1);
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, physicalProductOrderData);
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", physicalProductOrderData);
 
         // Act
         await _sut.ProcessOrder(order);

@@ -32,7 +32,7 @@ public class OrderProcessorTests
     public async Task ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesOnlyOneProcessor(params bool[] orderSuitabilityResults)
     {
         // Arrange
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, orderSuitabilityResults);
 
         // Act
@@ -54,7 +54,7 @@ public class OrderProcessorTests
     public async Task ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesMoreThanOneProcessor(params bool[] orderSuitabilityResults)
     {
         // Arrange
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, orderSuitabilityResults);
 
         // Act
@@ -73,7 +73,7 @@ public class OrderProcessorTests
     public async Task ProcessOrder_ShouldNOTExecuteAnyProcessors_WhenOrderDoesNotMatchAnyProcessors()
     {
         // Arrange
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, new []{false, false, false});
 
         // Act
@@ -98,7 +98,7 @@ public class OrderProcessorTests
     public async Task ProcessOrder_ShouldExecuteMatchingProcessors_WhenOrderMatchesProcessor_MultipleIterations(params bool[] orderSuitabilityResults)
     {
         // Arrange
-        var order = new Domain.Order.Order(1, DateTimeOffset.Now, new PhysicalProductOrderData("123", 1));
+        var order = new Domain.Order.Order(1, DateTimeOffset.Now, "testAgentName", new PhysicalProductOrderData("123", 1));
         SetupISpecificOrderProcessorMocksForSuitabilityResults(order, orderSuitabilityResults);
 
         // Act
