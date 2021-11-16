@@ -9,7 +9,7 @@ public class OrderProcessor
         throw new InvalidOperationException();
     }
 
-    public bool ProcessOrder(Order order)
+    public void ProcessOrder(Order order)
     {
         throw new InvalidOperationException();
     }
