@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Domain.Order.Processor;
 using Domain.Order.Processor.SpecificOrderProcessor;
 using Domain.Order.SpecificOrderData;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
@@ -21,7 +22,7 @@ public class OrderProcessorTests
             _specificOrderProcessorMocks[a] = new Mock<ISpecificOrderProcessor>();
         }
 
-        _sut = new OrderProcessor(new[] { _specificOrderProcessorMocks[0].Object, _specificOrderProcessorMocks[1].Object, _specificOrderProcessorMocks[2].Object });
+        _sut = new OrderProcessor(new[] { _specificOrderProcessorMocks[0].Object, _specificOrderProcessorMocks[1].Object, _specificOrderProcessorMocks[2].Object }, new NullLogger<OrderProcessor>());
     }
 
     [Theory]
