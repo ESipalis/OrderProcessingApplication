@@ -2,4 +2,4 @@
 
 namespace Domain.Commands;
 
-public record GeneratePackingSlipCommand(PackingSlip.PackingSlip PackingSlip, PackingSlipRecipient Recipient) : ICommand<long>;
+public record GeneratePackingSlipCommand(PackingSlip.PackingSlip PackingSlip, PackingSlipRecipient Recipient) : ICommand;
