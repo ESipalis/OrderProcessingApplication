@@ -4,6 +4,8 @@ namespace Domain.Order.Processor.SpecificOrderProcessor;
 
 public class AgentCommissionOrderProcessor : ISpecificOrderProcessor
 {
+    internal const decimal AgentCommissionValue = 7.11m;
+    
     public AgentCommissionOrderProcessor(IMediator mediator)
     {
         throw new InvalidOperationException();
