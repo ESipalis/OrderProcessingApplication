@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.CommandHandlers;
 
-public class GeneratePackingSlipCommandHandler : IRequestHandler<GeneratePackingSlipCommand>
+public class GeneratePackingSlipCommandHandler : ICommandHandler<GeneratePackingSlipCommand>
 {
     private readonly IPackingSlipService _packingSlipService;
 
